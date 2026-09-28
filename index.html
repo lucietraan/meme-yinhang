@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>中国迷因银行 — Banknote Generator Prototype</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="app">
+      <aside class="sidebar" aria-label="Project information and controls">
+        <header>
+          <h1 lang="zh">中国迷因银行</h1>
+          <p class="subtitle">Banknote Generator Prototype</p>
+          <div class="selection-controls">
+            <fieldset>
+              <legend>Denomination</legend>
+              <div id="denomination-buttons"></div>
+            </fieldset>
+            <label for="front-select">Front Meme</label>
+            <select id="front-select"></select>
+            <label for="back-select">Back Meme</label>
+            <select id="back-select"></select>
+          </div>
+          <dl>
+            <div><dt>Denomination:</dt><dd id="denomination">¥50</dd></div>
+            <div><dt>Front Meme:</dt><dd id="front-meme">Mushroom Head</dd></div>
+            <div><dt>Back Meme:</dt><dd id="back-meme">Fashion Buddha</dd></div>
+          </dl>
+          <p id="status" role="status">Loading banknote artwork…</p>
+        </header>
+        <div class="controls" aria-label="Generator controls">
+          <button type="button" id="regenerate">Regenerate</button>
+          <button type="button" id="save" disabled>Save</button>
+        </div>
+      </aside>
+      <section class="preview-area" aria-label="Generated banknotes, front and back">
+        <div class="preview preview-front">
+          <canvas id="front-canvas" role="img" aria-label="¥50 banknote front with Mushroom Head artwork" hidden></canvas>
+        </div>
+        <div class="preview preview-back">
+          <canvas id="back-canvas" role="img" aria-label="¥50 banknote back with Fashion Buddha artwork" hidden></canvas>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,156 @@
+* { box-sizing: border-box; }
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  color: #252525;
+  background: #f7f7f7;
+  font-family: system-ui, sans-serif;
+  line-height: 1.45;
+}
+
+/* The entire tool occupies one viewport, including padding. */
+.app {
+  display: grid;
+  grid-template-columns: minmax(0, 34fr) minmax(0, 66fr);
+  width: 100vw;
+  height: 100vh;
+  padding: clamp(24px, 4vw, 60px);
+  gap: clamp(24px, 3vw, 48px);
+}
+
+.sidebar {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+h1 {
+  margin: 0;
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: clamp(32px, 3.2vw, 48px);
+  font-weight: 600;
+  line-height: 1.2;
+}
+.subtitle { margin: 12px 0 32px; font-size: clamp(16px, 1.3vw, 18px); }
+dl { margin: 0; font-size: clamp(15px, 1.2vw, 17px); }
+dl div { display: flex; flex-wrap: wrap; gap: 0 6px; margin-top: 4px; }
+dt { font-weight: 700; }
+dd { margin: 0; }
+#status { margin: 20px 0 0; color: #707070; font-size: 12px; }
+#status.error { color: #a12020; }
+
+.controls { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+button {
+  width: min(100%, 180px);
+  padding: 10px 18px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  background: transparent;
+  color: #252525;
+  font: inherit;
+  font-size: 15px;
+}
+button:hover { background: #eee; }
+button:disabled { cursor: not-allowed; }
+
+/* Two equal slots bound the stack by BOTH available height and width.
+   The front sits at the bottom of its slot, the back at the top: this keeps
+   their gap small and the pair centered even when width limits their size. */
+.preview-area {
+  display: grid;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  min-width: 0;
+  min-height: 0;
+  gap: 14px;
+}
+.preview { position: relative; min-width: 0; min-height: 0; }
+canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.preview-front canvas { object-position: center bottom; }
+.preview-back canvas { object-position: center top; }
+canvas[hidden] { display: none; }
+
+/* Keep the two-column arrangement on smaller laptops. */
+@media (max-width: 1000px), (max-height: 600px) {
+  .app { padding: 24px; gap: 24px; }
+  h1 { font-size: 32px; }
+  .subtitle { margin: 10px 0 22px; font-size: 16px; }
+  dl { font-size: 14px; }
+  #status { margin-top: 14px; }
+}
+
+/* Only narrow phones need a stacked layout; previews share remaining space. */
+@media (max-width: 600px) {
+  .app { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); padding: 16px; gap: 18px; }
+  .sidebar { gap: 12px; }
+  h1 { font-size: 30px; }
+  .subtitle { margin: 6px 0 12px; font-size: 15px; }
+  dl { font-size: 12px; }
+  #status { margin-top: 8px; }
+  .controls { flex-direction: row; }
+  button { width: 120px; padding: 6px 12px; font-size: 13px; }
+  .preview-area { gap: 10px; }
+}
+
+@media (max-height: 450px) {
+  .app { padding: 12px; gap: 12px; }
+  .sidebar { gap: 8px; }
+  h1 { font-size: 26px; }
+  .subtitle { margin: 4px 0 8px; font-size: 13px; }
+  dl { font-size: 12px; }
+  #status { margin-top: 8px; font-size: 11px; }
+  .controls { gap: 6px; }
+  button { padding: 5px 12px; font-size: 12px; }
+}
+
+/* Native controls stay compact and draw their options from script.js. */
+.selection-controls { display: grid; gap: 7px; margin-bottom: 20px; }
+fieldset { min-width: 0; margin: 0 0 5px; padding: 0; border: 0; }
+legend, .selection-controls label { padding: 0; font-size: 12px; font-weight: 600; }
+legend { margin-bottom: 7px; }
+#denomination-buttons { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 5px; }
+#denomination-buttons button { width: 100%; padding: 7px 0; font-size: 13px; }
+#denomination-buttons button[aria-pressed="true"] { background: #dededb; border-color: #555; }
+select { width: 100%; min-width: 0; padding: 7px; border: 1px solid #aaa; border-radius: 4px; background: transparent; color: inherit; font: inherit; font-size: 14px; }
+button:not(:disabled) { cursor: pointer; }
+button:disabled { opacity: .5; }
+button:focus-visible, select:focus-visible { outline: 2px solid #555; outline-offset: 3px; }
+.sidebar dl { font-size: 12px; }
+#status { overflow-wrap: anywhere; }
+.sidebar header { min-height: 0; }
+
+@media (max-height: 700px) {
+  .subtitle { margin-bottom: 16px; }
+  .selection-controls { gap: 4px; margin-bottom: 12px; }
+  .sidebar { gap: 12px; }
+  .controls { flex-direction: row; }
+  #status { margin-top: 10px; }
+}
+@media (max-width: 600px) {
+  .sidebar dl { display: none; }
+  .selection-controls { gap: 3px; margin-bottom: 0; }
+  select { padding: 4px; }
+  #denomination-buttons button { padding: 4px 0; }
+}
+@media (max-height: 500px) {
+  .sidebar dl { display: none; }
+  .selection-controls { gap: 2px; margin-bottom: 0; }
+  select, #denomination-buttons button { padding-top: 3px; padding-bottom: 3px; }
+  .subtitle { margin-bottom: 8px; }
+}
