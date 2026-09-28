@@ -63,27 +63,35 @@ button {
 button:hover { background: #eee; }
 button:disabled { cursor: not-allowed; }
 
-/* Two equal slots bound the stack by BOTH available height and width.
-   The front sits at the bottom of its slot, the back at the top: this keeps
-   their gap small and the pair centered even when width limits their size. */
+/* Size the two-note stack to the available width AND height. Container
+   units refer to this preview area; each wrapper hugs its 1584 × 795 canvas. */
 .preview-area {
-  display: grid;
-  grid-template-rows: repeat(2, minmax(0, 1fr));
+  --note-gap: 14px;
+  container-type: size;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   min-width: 0;
   min-height: 0;
-  gap: 14px;
+  gap: var(--note-gap);
 }
-.preview { position: relative; min-width: 0; min-height: 0; }
+.preview {
+  flex: 0 0 auto;
+  width: min(100cqw, calc((100cqh - var(--note-gap)) * 1584 / 1590));
+  max-width: 100%;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+}
 canvas {
-  position: absolute;
-  inset: 0;
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  max-width: 100%;
+  height: auto;
 }
-.preview-front canvas { object-position: center bottom; }
-.preview-back canvas { object-position: center top; }
 canvas[hidden] { display: none; }
 
 /* Keep the two-column arrangement on smaller laptops. */
@@ -105,7 +113,7 @@ canvas[hidden] { display: none; }
   #status { margin-top: 8px; }
   .controls { flex-direction: row; }
   button { width: 120px; padding: 6px 12px; font-size: 13px; }
-  .preview-area { gap: 10px; }
+  .preview-area { --note-gap: 10px; }
 }
 
 @media (max-height: 450px) {

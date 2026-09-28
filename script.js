@@ -126,6 +126,9 @@ async function compositeSide(background, overlay, palette) {
   canvas.width = background.naturalWidth;
   canvas.height = background.naturalHeight;
   const context = canvas.getContext("2d");
+  // Bake an opaque white base into each side on every regeneration.
+  context.fillStyle = "#FFFFFF";
+  context.fillRect(0, 0, canvas.width, canvas.height);
   context.drawImage(background, 0, 0);
   context.drawImage(recolored, 0, 0);
   return canvas;
@@ -217,6 +220,9 @@ async function saveBanknote() {
   output.width = Math.max(frontCanvas.width, backCanvas.width);
   output.height = frontCanvas.height + gap + backCanvas.height;
   const context = output.getContext("2d");
+  // Keep the entire PNG opaque, including the spacing between notes.
+  context.fillStyle = "#FFFFFF";
+  context.fillRect(0, 0, output.width, output.height);
   context.drawImage(frontCanvas, (output.width - frontCanvas.width) / 2, 0);
   context.drawImage(backCanvas, (output.width - backCanvas.width) / 2, frontCanvas.height + gap);
   try {
