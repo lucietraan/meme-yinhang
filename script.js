@@ -36,15 +36,13 @@ const denominations = {
 
 // Add one object here after adding a registered transparent PNG to assets/.
 // All current backgrounds and listed overlays are registered at 1584 × 795.
-// Pending clean exports (not included in either selectable pool):
-// - assets/huba-front.png contains a baked-in blue denomination "10".
-// - assets/night-time-back.png is fully opaque and would cover the background.
 const frontMemes = [
   { id: "mushroom-head", name: "Mushroom Head", src: "assets/mushroom-head-front.png" },
   { id: "abstract-three-heads", name: "Abstract Three Heads", src: "assets/abstract-three-heads-front.png" },
   { id: "xiongmao-ren1", name: "Xiongmao Ren", src: "assets/xiongmao-ren1-front.png" },
   { id: "niulai", name: "Niulai", src: "assets/niulai-front.png" },
   { id: "bingchilling", name: "Bingchilling", src: "assets/bingchilling-front.png" },
+  { id: "huba", name: "Huba", src: "assets/huba-front.png" },
 ];
 const backMemes = [
   { id: "fashion-buddha", name: "Fashion Buddha", src: "assets/fashion-buddha-back.png" },
@@ -52,6 +50,7 @@ const backMemes = [
   { id: "get-rich", name: "Get Rich", src: "assets/get-rich-back.png" },
   { id: "blanket", name: "Blanket", src: "assets/blanket-back.png" },
   { id: "xiyouji", name: "Xiyouji", src: "assets/xiyouji-back.png" },
+  { id: "night-time", name: "Night Time", src: "assets/night-time-back.png" },
 ];
 
 // Cache promises so simultaneous requests share one load. Failed loads can retry.
